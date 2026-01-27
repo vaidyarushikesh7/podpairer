@@ -510,7 +510,7 @@ async def send_message(match_id: str, msg_req: ChatMessageRequest, request: Requ
     
     # Create message
     message_id = f"msg_{uuid.uuid4().hex[:12]}"
-    message = {
+    message_data = {
         "message_id": message_id,
         "match_id": match_id,
         "sender_id": user.user_id,
@@ -518,7 +518,7 @@ async def send_message(match_id: str, msg_req: ChatMessageRequest, request: Requ
         "created_at": datetime.now(timezone.utc).isoformat()
     }
     
-    await db.chat_messages.insert_one(message)
+    await db.chat_messages.insert_one(message_data.copy())
     
     # Update last_message_at
     await db.matches.update_one(
@@ -526,7 +526,7 @@ async def send_message(match_id: str, msg_req: ChatMessageRequest, request: Requ
         {"$set": {"last_message_at": datetime.now(timezone.utc).isoformat()}}
     )
     
-    return message
+    return message_data
 
 # AI Routes
 @api_router.post("/ai/generate-pitch")
