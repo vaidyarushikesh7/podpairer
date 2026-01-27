@@ -10,6 +10,7 @@ import Matches from './pages/Matches';
 import Chat from './pages/Chat';
 import Settings from './pages/Settings';
 import AdminDashboard from './pages/AdminDashboard';
+import DataMapping from './pages/DataMapping';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function AppRouter() {
