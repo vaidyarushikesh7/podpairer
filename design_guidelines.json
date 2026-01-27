@@ -1,0 +1,156 @@
+{
+  "identity": {
+    "name": "E1",
+    "role": "The Anti-AI Designer",
+    "mission": "Create a 'Studio Minimalist' aesthetic that feels like a high-end media kit, not a generic dating app.",
+    "principles": [
+      "Fusion over Imitation: Mix 'Tinder' mechanics with 'Editorial' aesthetics.",
+      "Emotion First: Every screen should feel like a 'Broadcast Signal' - clear, amplified, direct.",
+      "Content is King: The 'Talent' (Guest) and the 'Show' (Podcast) are the heroes. UI recedes.",
+      "Zoom In: Use massive typography and edge-to-edge imagery.",
+      "Negative Space: White space is luxury. Don't crowd the signal."
+    ]
+  },
+  "design_system": {
+    "theme": {
+      "mode": "light",
+      "strategy": "The 'Studio' Aesthetic. Clean, acoustic, precise.",
+      "dark_mode_support": true
+    },
+    "colors": {
+      "palette_name": "The Broadcast Signal",
+      "primary": {
+        "name": "Microphone Black",
+        "hex": "#09090B",
+        "tailwind": "bg-zinc-950",
+        "usage": "Headings, Primary Buttons, Strong Borders"
+      },
+      "background": {
+        "name": "Acoustic White",
+        "hex": "#FAFAF9",
+        "tailwind": "bg-stone-50",
+        "usage": "App Background, Canvas"
+      },
+      "surface": {
+        "name": "Soundproof Grey",
+        "hex": "#FFFFFF",
+        "tailwind": "bg-white",
+        "usage": "Cards, Modals, Floating Elements"
+      },
+      "accent_primary": {
+        "name": "On-Air Orange",
+        "hex": "#EA580C",
+        "tailwind": "text-orange-600 bg-orange-600",
+        "usage": "Call to Actions, 'Match' Highlights, Notification Dots"
+      },
+      "accent_secondary": {
+        "name": "Signal Violet",
+        "hex": "#7C3AED",
+        "tailwind": "text-violet-600 bg-violet-600",
+        "usage": "Premium Features, 'Super Like' equivalents"
+      },
+      "text": {
+        "primary": "#09090B",
+        "secondary": "#71717A",
+        "tertiary": "#A1A1AA"
+      },
+      "border": {
+        "default": "#E5E5E5",
+        "active": "#09090B"
+      }
+    },
+    "typography": {
+      "font_family_heading": "Syne, sans-serif",
+      "font_family_body": "Manrope, sans-serif",
+      "import_url": "https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Syne:wght@400;700;800&display=swap",
+      "scale": {
+        "h1": "text-4xl md:text-5xl font-bold tracking-tight font-heading",
+        "h2": "text-3xl md:text-4xl font-bold tracking-tight font-heading",
+        "h3": "text-2xl font-semibold tracking-tight font-heading",
+        "body_lg": "text-lg font-medium leading-relaxed font-body",
+        "body_base": "text-base leading-relaxed text-zinc-600 font-body",
+        "caption": "text-sm font-medium tracking-wide uppercase text-zinc-400 font-body"
+      }
+    },
+    "spacing": {
+      "container_padding": "p-6 md:p-8",
+      "section_gap": "gap-8 md:gap-12",
+      "card_padding": "p-6"
+    },
+    "radius": {
+      "default": "rounded-2xl",
+      "button": "rounded-full",
+      "card": "rounded-3xl"
+    },
+    "shadows": {
+      "card": "shadow-[0_8px_30px_rgb(0,0,0,0.04)]",
+      "floating": "shadow-[0_20px_50px_rgb(0,0,0,0.1)]",
+      "button": "shadow-[0_4px_14px_0_rgba(234,88,12,0.39)]"
+    }
+  },
+  "components": {
+    "buttons": {
+      "primary": "bg-zinc-950 text-white hover:bg-zinc-800 rounded-full px-8 py-6 text-lg font-bold transition-all hover:scale-105 active:scale-95 shadow-lg",
+      "secondary": "bg-white text-zinc-950 border-2 border-zinc-100 hover:border-zinc-950 rounded-full px-8 py-6 text-lg font-bold transition-all",
+      "ghost": "text-zinc-500 hover:text-zinc-950 hover:bg-zinc-50 rounded-full px-6 py-4 font-medium transition-colors"
+    },
+    "cards": {
+      "swipe_card": "relative w-full aspect-[3/4] bg-white rounded-3xl shadow-xl overflow-hidden border border-zinc-100 select-none touch-none",
+      "profile_card": "bg-white rounded-2xl border border-zinc-100 p-6 shadow-sm hover:shadow-md transition-shadow",
+      "feature_card": "bg-zinc-50 rounded-2xl p-8 border border-zinc-100 hover:border-orange-200 transition-colors group"
+    },
+    "inputs": {
+      "default": "h-14 px-6 rounded-xl bg-zinc-50 border-zinc-200 focus:border-zinc-950 focus:ring-0 transition-all text-lg placeholder:text-zinc-400"
+    },
+    "navigation": {
+      "bottom_bar": "fixed bottom-6 left-4 right-4 h-20 bg-white/80 backdrop-blur-xl border border-white/20 shadow-2xl rounded-full flex items-center justify-around z-50"
+    }
+  },
+  "layouts": {
+    "swipe_deck": {
+      "structure": "flex flex-col items-center justify-center h-[80vh] w-full max-w-md mx-auto relative",
+      "animation": "use framer-motion for drag gestures (drag='x', dragConstraints, dragElastic)"
+    },
+    "chat_interface": {
+      "structure": "flex flex-col h-[calc(100vh-80px)] bg-white",
+      "bubble_me": "bg-zinc-950 text-white rounded-2xl rounded-tr-sm p-4 max-w-[80%] self-end",
+      "bubble_them": "bg-zinc-100 text-zinc-900 rounded-2xl rounded-tl-sm p-4 max-w-[80%] self-start"
+    }
+  },
+  "assets": {
+    "images": {
+      "hosts": [
+        "https://images.unsplash.com/photo-1668606144327-837f2d8eac94?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "https://images.unsplash.com/photo-1660675587271-47f1083bc367?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "https://images.unsplash.com/photo-1660675588067-13ecd2c19de4?crop=entropy&cs=srgb&fm=jpg&q=85"
+      ],
+      "guests": [
+        "https://images.pexels.com/photos/30004360/pexels-photo-30004360.jpeg",
+        "https://images.pexels.com/photos/30004323/pexels-photo-30004323.jpeg",
+        "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      ],
+      "covers": [
+        "https://images.unsplash.com/photo-1616793815079-59c1eefeaed7?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "https://images.unsplash.com/photo-1703583955173-0a5d6f697490?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "https://images.unsplash.com/photo-1703583956423-6fafc450a200?crop=entropy&cs=srgb&fm=jpg&q=85"
+      ]
+    },
+    "icons": "Use 'lucide-react' for all UI icons. Use 'Mic', 'Headphones', 'Radio', 'Signal' for brand elements."
+  },
+  "universal_guidelines": [
+    "Do NOT use gradients for backgrounds. Use solid, rich colors or subtle noise textures.",
+    "Do NOT center text by default. Left-align for readability, center only for 'Hero' moments.",
+    "Use 'data-testid' on all interactive elements.",
+    "Ensure all touch targets are at least 44px.",
+    "Use 'sonner' for all toast notifications.",
+    "For the Swipe Deck: Use 'framer-motion' AnimatePresence and drag gestures. Do not build from scratch without a library.",
+    "For Chat: Ensure the input area is fixed to the bottom and the message list scrolls."
+  ],
+  "instructions_to_main_agent": {
+    "step_1": "Install 'framer-motion' and 'lucide-react' immediately.",
+    "step_2": "Update 'tailwind.config.js' with the 'Broadcast Signal' color palette and fonts.",
+    "step_3": "Create the 'SwipeCard' component first - it is the core interaction.",
+    "step_4": "Build the 'RoleSelection' screen with high-impact imagery (Host vs Guest).",
+    "step_5": "Implement the 'Chat' interface with a focus on clean typography."
+  }
+}
