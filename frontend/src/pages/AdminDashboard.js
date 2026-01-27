@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Users, MessageCircle as MessageIcon, Heart, TrendingUp } from 'lucide-react';
+import { ArrowLeft, Users, MessageCircle as MessageIcon, Heart, TrendingUp, Brain } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { toast } from 'sonner';
 
@@ -10,6 +10,7 @@ function AdminDashboard() {
   const [stats, setStats] = useState(null);
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [trainingModel, setTrainingModel] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -37,6 +38,28 @@ function AdminDashboard() {
       toast.error('Failed to load admin data');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleTrainModel = async () => {
+    setTrainingModel(true);
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/admin/train-model`, {
+        method: 'POST',
+        credentials: 'include'
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to train model');
+      }
+
+      const data = await response.json();
+      toast.success(`Model trained successfully with ${data.swipes_used} swipes!`);
+    } catch (error) {
+      console.error('Error training model:', error);
+      toast.error('Failed to train model');
+    } finally {
+      setTrainingModel(false);
     }
   };
 
