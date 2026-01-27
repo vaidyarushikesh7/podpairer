@@ -4,10 +4,10 @@ import { useNavigate, useLocation } from 'react-router-dom';
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 function ProtectedRoute({ children }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(location.state?.user ? true : null);
-  const [user, setUser] = useState(location.state?.user || null);
   const navigate = useNavigate();
   const location = useLocation();
+  const [isAuthenticated, setIsAuthenticated] = useState(location.state?.user ? true : null);
+  const [user, setUser] = useState(location.state?.user || null);
 
   useEffect(() => {
     if (location.state?.user) return;
