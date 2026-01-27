@@ -355,7 +355,7 @@ async def populate_demo_data():
             "user_id": user_id,
             "email": guest_data["email"],
             "name": guest_data["name"],
-            "picture": f"https://ui-avatars.com/api/?name={guest_data['name'].replace(' ', '+')}&background=random",
+            "picture": guest_data.get("picture", f"https://ui-avatars.com/api/?name={guest_data['name'].replace(' ', '+')}&background=random"),
             "role": "guest",
             "profile_completed": True,
             "subscription_tier": "free",
