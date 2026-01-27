@@ -30,6 +30,7 @@ function AppRouter() {
       <Route path="/chat/:matchId" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
       <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
       <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+      <Route path="/dev/data-mapping" element={<ProtectedRoute><DataMapping /></ProtectedRoute>} />
     </Routes>
   );
 }
