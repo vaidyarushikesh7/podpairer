@@ -72,10 +72,26 @@ function Matches() {
                 data-testid={`match-card-${match.match.match_id}`}
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-zinc-100 to-zinc-200 flex items-center justify-center flex-shrink-0">
-                    <span className="text-2xl font-bold text-zinc-600">
-                      {match.other_user.name.charAt(0)}
-                    </span>
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0 bg-gradient-to-br from-zinc-100 to-zinc-200">
+                    {match.other_user.picture ? (
+                      <img 
+                        src={match.other_user.picture} 
+                        alt={match.other_user.name}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                          e.target.nextSibling.style.display = 'flex';
+                        }}
+                      />
+                    ) : null}
+                    <div 
+                      className="w-full h-full flex items-center justify-center"
+                      style={{ display: match.other_user.picture ? 'none' : 'flex' }}
+                    >
+                      <span className="text-2xl font-bold text-zinc-600">
+                        {match.other_user.name.charAt(0)}
+                      </span>
+                    </div>
                   </div>
                   
                   <div className="flex-1 min-w-0">
