@@ -333,7 +333,7 @@ async def get_profile(request: Request, authorization: Optional[str] = Header(No
 # Discovery Routes
 @api_router.get("/discover")
 async def get_candidates(request: Request, authorization: Optional[str] = Header(None)):
-    """Get candidates for swiping"""
+    """Get candidates for swiping with AI-powered ranking"""
     session_token = request.cookies.get("session_token")
     user = await get_user_from_token(authorization, session_token)
     
@@ -364,9 +364,26 @@ async def get_candidates(request: Request, authorization: Optional[str] = Header
         "profile_completed": True
     }
     
-    # Get candidates
-    candidates_cursor = db.users.find(query, {"_id": 0}).limit(10)
-    candidates = await candidates_cursor.to_list(10)
+    # Get more candidates for ranking (limit 50)
+    candidates_cursor = db.users.find(query, {"_id": 0}).limit(50)
+    candidates = await candidates_cursor.to_list(50)
+    
+    if not candidates:
+        return []
+    
+    # Use collaborative filtering to rank candidates
+    candidate_ids = [c["user_id"] for c in candidates]
+    try:
+        ranked_candidates = recommender.recommend(user.user_id, candidate_ids, top_k=10)
+        # Sort candidates by recommendation score
+        ranked_ids = [item_id for item_id, score in ranked_candidates]
+        
+        # Reorder candidates based on ranking
+        candidates_dict = {c["user_id"]: c for c in candidates}
+        candidates = [candidates_dict[uid] for uid in ranked_ids if uid in candidates_dict]
+    except Exception as e:
+        logger.warning(f"Error using collaborative filter: {e}. Falling back to default ordering.")
+        candidates = candidates[:10]
     
     # Get profiles for candidates
     result = []
