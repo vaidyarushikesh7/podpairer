@@ -793,6 +793,54 @@ async def get_stats(request: Request, authorization: Optional[str] = Header(None
         "pro_users": pro_users
     }
 
+@api_router.post("/admin/train-model")
+async def train_recommendation_model(request: Request, authorization: Optional[str] = Header(None)):
+    """Train the collaborative filtering model (Admin only)"""
+    session_token = request.cookies.get("session_token")
+    user = await get_user_from_token(authorization, session_token)
+    
+    # Get all swipes
+    swipes_cursor = db.swipes.find({}, {"_id": 0})
+    swipes = await swipes_cursor.to_list(10000)
+    
+    if len(swipes) < 10:
+        # Create synthetic training data if not enough real swipes
+        logger.info("Creating synthetic training data...")
+        hosts = await db.users.find({"role": "host"}, {"_id": 0, "user_id": 1}).to_list(10)
+        guests = await db.users.find({"role": "guest"}, {"_id": 0, "user_id": 1}).to_list(10)
+        
+        if hosts and guests:
+            import random
+            synthetic_swipes = []
+            
+            for host in hosts:
+                num_swipes = random.randint(3, 5)
+                selected_guests = random.sample(guests, min(num_swipes, len(guests)))
+                
+                for guest in selected_guests:
+                    direction = "right" if random.random() > 0.3 else "left"
+                    synthetic_swipes.append({
+                        "swiper_id": host["user_id"],
+                        "swiped_id": guest["user_id"],
+                        "direction": direction
+                    })
+            
+            swipes = synthetic_swipes
+    
+    if len(swipes) < 10:
+        raise HTTPException(status_code=400, detail="Not enough swipe data to train model")
+    
+    # Train model in background
+    try:
+        recommender.train_model(swipes, epochs=20)
+        return {
+            "message": "Model training completed successfully",
+            "swipes_used": len(swipes)
+        }
+    except Exception as e:
+        logger.error(f"Error training model: {e}")
+        raise HTTPException(status_code=500, detail=f"Model training failed: {str(e)}")
+
 # Include the router in the main app
 app.include_router(api_router)
 
