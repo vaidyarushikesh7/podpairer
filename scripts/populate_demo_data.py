@@ -1,0 +1,281 @@
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+
+from motor.motor_asyncio import AsyncIOMotorClient
+from datetime import datetime, timezone
+import asyncio
+import uuid
+
+# MongoDB connection
+mongo_url = "mongodb://localhost:27017"
+client = AsyncIOMotorClient(mongo_url)
+db = client["test_database"]
+
+async def populate_demo_data():
+    print("🚀 Populating demo data...")
+    
+    # Demo Podcast Hosts
+    demo_hosts = [
+        {
+            "name": "Sarah Chen",
+            "email": "sarah.chen@demo.com",
+            "podcast_name": "Tech Founders Unfiltered",
+            "podcast_description": "Real conversations with startup founders about their journey, failures, and wins. No BS, just honest insights from the trenches.",
+            "niche": ["Technology", "Business", "Entrepreneurship"],
+            "topics": ["Startups", "Product Development", "Venture Capital", "Growth Hacking"],
+            "audience_size": "10K-50K",
+            "preferred_guest_type": ["Founder", "Expert"],
+            "language": "English",
+            "country": "United States",
+            "recording_format": "remote",
+            "availability": "Weekday mornings PST"
+        },
+        {
+            "name": "Marcus Johnson",
+            "email": "marcus.johnson@demo.com",
+            "podcast_name": "The Marketing Maven",
+            "podcast_description": "Breaking down the latest marketing strategies, growth tactics, and brand storytelling with industry leaders.",
+            "niche": ["Marketing", "Business"],
+            "topics": ["Digital Marketing", "Content Strategy", "Social Media", "Brand Building"],
+            "audience_size": "50K-100K",
+            "preferred_guest_type": ["Expert", "Influencer"],
+            "language": "English",
+            "country": "United States",
+            "recording_format": "remote",
+            "availability": "Flexible, afternoons EST"
+        },
+        {
+            "name": "Elena Rodriguez",
+            "email": "elena.rodriguez@demo.com",
+            "podcast_name": "Wellness Warriors",
+            "podcast_description": "Exploring holistic health, fitness, and mental wellness with experts who are changing lives.",
+            "niche": ["Health", "Fitness", "Personal Development"],
+            "topics": ["Nutrition", "Mental Health", "Fitness", "Mindfulness"],
+            "audience_size": "10K-50K",
+            "preferred_guest_type": ["Expert", "Storyteller"],
+            "language": "English",
+            "country": "Canada",
+            "recording_format": "remote",
+            "availability": "Evenings and weekends"
+        },
+        {
+            "name": "David Park",
+            "email": "david.park@demo.com",
+            "podcast_name": "Finance Friday",
+            "podcast_description": "Making finance accessible. Weekly deep-dives into investing, wealth building, and financial independence.",
+            "niche": ["Finance", "Business"],
+            "topics": ["Investing", "Personal Finance", "Cryptocurrency", "Real Estate"],
+            "audience_size": "100K+",
+            "preferred_guest_type": ["Expert", "Researcher"],
+            "language": "English",
+            "country": "United States",
+            "recording_format": "remote",
+            "availability": "Fridays only"
+        },
+        {
+            "name": "Priya Sharma",
+            "email": "priya.sharma@demo.com",
+            "podcast_name": "EdTech Insights",
+            "podcast_description": "The intersection of education and technology. Exploring how we're transforming learning for the next generation.",
+            "niche": ["Education", "Technology"],
+            "topics": ["Online Learning", "Educational Technology", "Future of Work", "Skills Development"],
+            "audience_size": "10K-50K",
+            "preferred_guest_type": ["Expert", "Founder"],
+            "language": "English",
+            "country": "United Kingdom",
+            "recording_format": "remote",
+            "availability": "Weekday afternoons GMT"
+        }
+    ]
+    
+    # Demo Podcast Guests
+    demo_guests = [
+        {
+            "name": "Alex Thompson",
+            "email": "alex.thompson@demo.com",
+            "bio": "Former VP of Engineering at a unicorn startup. Now advising early-stage tech companies on scaling engineering teams and building product culture.",
+            "expertise": ["Technology", "Business", "Leadership"],
+            "niche": ["Technology", "Business"],
+            "language": "English",
+            "country": "United States",
+            "remote_recording": True,
+            "availability": "Weekday afternoons",
+            "previous_appearances": ["TechCrunch Podcast", "Indie Hackers"]
+        },
+        {
+            "name": "Dr. Maya Patel",
+            "email": "maya.patel@demo.com",
+            "bio": "Clinical psychologist and bestselling author specializing in workplace mental health. Featured in NYT, Forbes, and Psychology Today.",
+            "expertise": ["Health", "Personal Development", "Mental Wellness"],
+            "niche": ["Health", "Personal Development"],
+            "language": "English",
+            "country": "United States",
+            "remote_recording": True,
+            "availability": "Flexible schedule",
+            "previous_appearances": ["The Tim Ferriss Show", "On Purpose with Jay Shetty"]
+        },
+        {
+            "name": "Jordan Lee",
+            "email": "jordan.lee@demo.com",
+            "bio": "Growth marketing expert who scaled 3 startups from 0 to 8 figures. Speaker, consultant, and recovering perfectionist.",
+            "expertise": ["Marketing", "Business", "Growth Strategy"],
+            "niche": ["Marketing", "Business"],
+            "language": "English",
+            "country": "Singapore",
+            "remote_recording": True,
+            "availability": "Evenings APAC time",
+            "previous_appearances": ["Marketing School", "Growth Everywhere"]
+        },
+        {
+            "name": "Sophia Martinez",
+            "email": "sophia.martinez@demo.com",
+            "bio": "Certified nutritionist and fitness coach with 15+ years experience. Passionate about making healthy living sustainable and joyful.",
+            "expertise": ["Health", "Fitness", "Nutrition"],
+            "niche": ["Health", "Fitness"],
+            "language": "English",
+            "country": "Spain",
+            "remote_recording": True,
+            "availability": "Mornings and evenings",
+            "previous_appearances": ["The Model Health Show", "Mind Pump"]
+        },
+        {
+            "name": "James Wilson",
+            "email": "james.wilson@demo.com",
+            "bio": "CFP and wealth management advisor helping millennials build long-term wealth. Host of a popular finance YouTube channel with 200K+ subscribers.",
+            "expertise": ["Finance", "Investing", "Personal Finance"],
+            "niche": ["Finance", "Business"],
+            "language": "English",
+            "country": "United States",
+            "remote_recording": True,
+            "availability": "Weekday mornings EST",
+            "previous_appearances": ["BiggerPockets Money", "ChooseFI"]
+        },
+        {
+            "name": "Olivia Brown",
+            "email": "olivia.brown@demo.com",
+            "bio": "EdTech founder who built and sold an online learning platform to a Fortune 500 company. Now angel investing in education startups.",
+            "expertise": ["Education", "Technology", "Entrepreneurship"],
+            "niche": ["Education", "Technology"],
+            "language": "English",
+            "country": "Australia",
+            "remote_recording": True,
+            "availability": "Flexible, APAC hours preferred",
+            "previous_appearances": ["The EdTech Podcast", "Course Creator Chronicles"]
+        },
+        {
+            "name": "Ryan Cooper",
+            "email": "ryan.cooper@demo.com",
+            "bio": "AI researcher and tech ethicist exploring the societal impact of artificial intelligence. TEDx speaker and consultant to Fortune 500 companies.",
+            "expertise": ["Technology", "Science", "Ethics"],
+            "niche": ["Technology", "Science"],
+            "language": "English",
+            "country": "United States",
+            "remote_recording": True,
+            "availability": "Afternoons PST",
+            "previous_appearances": ["a16z Podcast", "The AI Alignment Podcast"]
+        }
+    ]
+    
+    # Clear existing demo data
+    await db.users.delete_many({"email": {"$regex": "@demo.com"}})
+    await db.profiles.delete_many({"user_id": {"$regex": "demo_"}})
+    
+    print("\n📝 Creating demo hosts...")
+    for host_data in demo_hosts:
+        user_id = f"demo_host_{uuid.uuid4().hex[:8]}"
+        
+        # Create user
+        user = {
+            "user_id": user_id,
+            "email": host_data["email"],
+            "name": host_data["name"],
+            "picture": f"https://ui-avatars.com/api/?name={host_data['name'].replace(' ', '+')}&background=random",
+            "role": "host",
+            "profile_completed": True,
+            "subscription_tier": "free",
+            "swipes_today": 0,
+            "swipes_reset_at": None,
+            "created_at": datetime.now(timezone.utc).isoformat()
+        }
+        await db.users.insert_one(user)
+        
+        # Create profile
+        profile = {
+            "user_id": user_id,
+            "niche": host_data["niche"],
+            "language": host_data["language"],
+            "country": host_data["country"],
+            "availability": host_data["availability"],
+            "podcast_name": host_data["podcast_name"],
+            "podcast_description": host_data["podcast_description"],
+            "topics": host_data["topics"],
+            "audience_size": host_data["audience_size"],
+            "preferred_guest_type": host_data["preferred_guest_type"],
+            "recording_format": host_data["recording_format"],
+            "podcast_links": {
+                "spotify": f"https://spotify.com/podcast/{user_id}",
+                "apple": f"https://podcasts.apple.com/{user_id}",
+                "youtube": ""
+            },
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "updated_at": datetime.now(timezone.utc).isoformat()
+        }
+        await db.profiles.insert_one(profile)
+        print(f"  ✅ Created host: {host_data['name']} - {host_data['podcast_name']}")
+    
+    print("\n📝 Creating demo guests...")
+    for guest_data in demo_guests:
+        user_id = f"demo_guest_{uuid.uuid4().hex[:8]}"
+        
+        # Create user
+        user = {
+            "user_id": user_id,
+            "email": guest_data["email"],
+            "name": guest_data["name"],
+            "picture": f"https://ui-avatars.com/api/?name={guest_data['name'].replace(' ', '+')}&background=random",
+            "role": "guest",
+            "profile_completed": True,
+            "subscription_tier": "free",
+            "swipes_today": 0,
+            "swipes_reset_at": None,
+            "created_at": datetime.now(timezone.utc).isoformat()
+        }
+        await db.users.insert_one(user)
+        
+        # Create profile
+        profile = {
+            "user_id": user_id,
+            "niche": guest_data["niche"],
+            "language": guest_data["language"],
+            "country": guest_data["country"],
+            "availability": guest_data["availability"],
+            "bio": guest_data["bio"],
+            "expertise": guest_data["expertise"],
+            "previous_appearances": guest_data.get("previous_appearances", []),
+            "social_links": {
+                "linkedin": f"https://linkedin.com/in/{guest_data['name'].lower().replace(' ', '')}",
+                "twitter": f"https://twitter.com/{guest_data['name'].split()[0].lower()}",
+                "website": f"https://{guest_data['name'].lower().replace(' ', '')}.com"
+            },
+            "remote_recording": guest_data["remote_recording"],
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "updated_at": datetime.now(timezone.utc).isoformat()
+        }
+        await db.profiles.insert_one(profile)
+        print(f"  ✅ Created guest: {guest_data['name']} - {', '.join(guest_data['expertise'][:2])}")
+    
+    # Print summary
+    total_users = await db.users.count_documents({})
+    total_hosts = await db.users.count_documents({"role": "host"})
+    total_guests = await db.users.count_documents({"role": "guest"})
+    
+    print(f"\n✨ Demo data populated successfully!")
+    print(f"📊 Database stats:")
+    print(f"   Total users: {total_users}")
+    print(f"   Hosts: {total_hosts}")
+    print(f"   Guests: {total_guests}")
+    print(f"\n🎉 You can now test swiping with demo profiles!")
+
+if __name__ == "__main__":
+    asyncio.run(populate_demo_data())
