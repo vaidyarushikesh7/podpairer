@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Home, MessageCircle, Settings as SettingsIcon, Crown, LogOut } from 'lucide-react';
+import { Home, MessageCircle, Settings as SettingsIcon, Crown, LogOut, Code } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { toast } from 'sonner';
 
