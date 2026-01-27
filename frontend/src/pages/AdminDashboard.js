@@ -86,43 +86,72 @@ function AdminDashboard() {
         </div>
 
         {stats && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <div className="bg-white rounded-2xl p-6 border border-zinc-100 shadow-sm" data-testid="stat-total-users">
-              <div className="flex items-center justify-between mb-2">
-                <Users className="h-8 w-8 text-zinc-600" />
-                <span className="text-2xl font-bold font-heading">{stats.total_users}</span>
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+              <div className="bg-white rounded-2xl p-6 border border-zinc-100 shadow-sm" data-testid="stat-total-users">
+                <div className="flex items-center justify-between mb-2">
+                  <Users className="h-8 w-8 text-zinc-600" />
+                  <span className="text-2xl font-bold font-heading">{stats.total_users}</span>
+                </div>
+                <p className="text-sm text-zinc-600">Total Users</p>
+                <div className="flex gap-4 mt-2 text-xs text-zinc-500">
+                  <span>Hosts: {stats.total_hosts}</span>
+                  <span>Guests: {stats.total_guests}</span>
+                </div>
               </div>
-              <p className="text-sm text-zinc-600">Total Users</p>
-              <div className="flex gap-4 mt-2 text-xs text-zinc-500">
-                <span>Hosts: {stats.total_hosts}</span>
-                <span>Guests: {stats.total_guests}</span>
+
+              <div className="bg-white rounded-2xl p-6 border border-zinc-100 shadow-sm" data-testid="stat-matches">
+                <div className="flex items-center justify-between mb-2">
+                  <Heart className="h-8 w-8 text-orange-600" />
+                  <span className="text-2xl font-bold font-heading">{stats.total_matches}</span>
+                </div>
+                <p className="text-sm text-zinc-600">Total Matches</p>
+              </div>
+
+              <div className="bg-white rounded-2xl p-6 border border-zinc-100 shadow-sm" data-testid="stat-messages">
+                <div className="flex items-center justify-between mb-2">
+                  <MessageIcon className="h-8 w-8 text-violet-600" />
+                  <span className="text-2xl font-bold font-heading">{stats.total_messages}</span>
+                </div>
+                <p className="text-sm text-zinc-600">Total Messages</p>
+              </div>
+
+              <div className="bg-white rounded-2xl p-6 border border-zinc-100 shadow-sm" data-testid="stat-pro-users">
+                <div className="flex items-center justify-between mb-2">
+                  <TrendingUp className="h-8 w-8 text-green-600" />
+                  <span className="text-2xl font-bold font-heading">{stats.pro_users}</span>
+                </div>
+                <p className="text-sm text-zinc-600">Pro Members</p>
               </div>
             </div>
 
-            <div className="bg-white rounded-2xl p-6 border border-zinc-100 shadow-sm" data-testid="stat-matches">
-              <div className="flex items-center justify-between mb-2">
-                <Heart className="h-8 w-8 text-orange-600" />
-                <span className="text-2xl font-bold font-heading">{stats.total_matches}</span>
+            <div className="bg-gradient-to-br from-violet-50 to-blue-50 rounded-3xl p-6 border-2 border-violet-200 mb-8">
+              <div className="flex items-start gap-4">
+                <div className="bg-violet-100 rounded-full p-3">
+                  <Brain className="h-8 w-8 text-violet-600" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-xl font-bold font-heading mb-2">AI Recommendation Model</h3>
+                  <p className="text-zinc-600 mb-4">
+                    Train the collaborative filtering model using swipe data to improve match recommendations.
+                    {stats.total_swipes > 0 && (
+                      <span className="block mt-1 text-sm">
+                        Current training data: {stats.total_swipes} swipes
+                      </span>
+                    )}
+                  </p>
+                  <Button
+                    onClick={handleTrainModel}
+                    disabled={trainingModel}
+                    className="bg-violet-600 hover:bg-violet-700 text-white rounded-full px-6 py-3 disabled:opacity-50"
+                    data-testid="train-model-btn"
+                  >
+                    {trainingModel ? 'Training Model...' : 'Train AI Model'}
+                  </Button>
+                </div>
               </div>
-              <p className="text-sm text-zinc-600">Total Matches</p>
             </div>
-
-            <div className="bg-white rounded-2xl p-6 border border-zinc-100 shadow-sm" data-testid="stat-messages">
-              <div className="flex items-center justify-between mb-2">
-                <MessageIcon className="h-8 w-8 text-violet-600" />
-                <span className="text-2xl font-bold font-heading">{stats.total_messages}</span>
-              </div>
-              <p className="text-sm text-zinc-600">Total Messages</p>
-            </div>
-
-            <div className="bg-white rounded-2xl p-6 border border-zinc-100 shadow-sm" data-testid="stat-pro-users">
-              <div className="flex items-center justify-between mb-2">
-                <TrendingUp className="h-8 w-8 text-green-600" />
-                <span className="text-2xl font-bold font-heading">{stats.pro_users}</span>
-              </div>
-              <p className="text-sm text-zinc-600">Pro Members</p>
-            </div>
-          </div>
+          </>
         )}
 
         <div className="bg-white rounded-3xl p-6 border border-zinc-100 shadow-sm">
