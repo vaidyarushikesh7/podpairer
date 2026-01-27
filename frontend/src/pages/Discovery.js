@@ -147,12 +147,29 @@ function Discovery() {
                 data-testid="swipe-card"
               >
                 <div className="h-full flex flex-col">
-                  <div className="h-2/3 bg-gradient-to-br from-zinc-100 to-zinc-200 relative overflow-hidden">
-                    <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="h-2/3 relative overflow-hidden">
+                    {currentCandidate.user.picture ? (
+                      <img 
+                        src={currentCandidate.user.picture} 
+                        alt={currentCandidate.user.name}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                          e.target.nextSibling.style.display = 'flex';
+                        }}
+                      />
+                    ) : null}
+                    <div 
+                      className="absolute inset-0 bg-gradient-to-br from-zinc-100 to-zinc-200 flex items-center justify-center"
+                      style={{ display: currentCandidate.user.picture ? 'none' : 'flex' }}
+                    >
                       <div className="text-6xl font-bold text-zinc-300">
                         {currentCandidate.user.name.charAt(0)}
                       </div>
                     </div>
+                    
+                    {/* Gradient overlay for better text readability */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                   </div>
 
                   <div className="flex-1 p-6 overflow-y-auto">
