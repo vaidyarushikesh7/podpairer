@@ -20,6 +20,7 @@ async def populate_demo_data():
         {
             "name": "Sarah Chen",
             "email": "sarah.chen@demo.com",
+            "picture": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop",
             "podcast_name": "Tech Founders Unfiltered",
             "podcast_description": "Real conversations with startup founders about their journey, failures, and wins. No BS, just honest insights from the trenches.",
             "niche": ["Technology", "Business", "Entrepreneurship"],
@@ -34,6 +35,7 @@ async def populate_demo_data():
         {
             "name": "Marcus Johnson",
             "email": "marcus.johnson@demo.com",
+            "picture": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop",
             "podcast_name": "The Marketing Maven",
             "podcast_description": "Breaking down the latest marketing strategies, growth tactics, and brand storytelling with industry leaders.",
             "niche": ["Marketing", "Business"],
@@ -48,6 +50,7 @@ async def populate_demo_data():
         {
             "name": "Elena Rodriguez",
             "email": "elena.rodriguez@demo.com",
+            "picture": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop",
             "podcast_name": "Wellness Warriors",
             "podcast_description": "Exploring holistic health, fitness, and mental wellness with experts who are changing lives.",
             "niche": ["Health", "Fitness", "Personal Development"],
@@ -62,6 +65,7 @@ async def populate_demo_data():
         {
             "name": "David Park",
             "email": "david.park@demo.com",
+            "picture": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop",
             "podcast_name": "Finance Friday",
             "podcast_description": "Making finance accessible. Weekly deep-dives into investing, wealth building, and financial independence.",
             "niche": ["Finance", "Business"],
@@ -76,6 +80,7 @@ async def populate_demo_data():
         {
             "name": "Priya Sharma",
             "email": "priya.sharma@demo.com",
+            "picture": "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&fit=crop",
             "podcast_name": "EdTech Insights",
             "podcast_description": "The intersection of education and technology. Exploring how we're transforming learning for the next generation.",
             "niche": ["Education", "Technology"],
@@ -86,6 +91,51 @@ async def populate_demo_data():
             "country": "United Kingdom",
             "recording_format": "remote",
             "availability": "Weekday afternoons GMT"
+        },
+        {
+            "name": "Jamal Washington",
+            "email": "jamal.washington@demo.com",
+            "picture": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop",
+            "podcast_name": "Culture Code",
+            "podcast_description": "Conversations about culture, creativity, and the human experience with artists, creators, and changemakers.",
+            "niche": ["Entertainment", "Personal Development"],
+            "topics": ["Arts", "Culture", "Creativity", "Social Impact"],
+            "audience_size": "10K-50K",
+            "preferred_guest_type": ["Storyteller", "Influencer"],
+            "language": "English",
+            "country": "United States",
+            "recording_format": "remote",
+            "availability": "Evenings EST"
+        },
+        {
+            "name": "Lisa Thompson",
+            "email": "lisa.thompson@demo.com",
+            "picture": "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=400&h=400&fit=crop",
+            "podcast_name": "Science Simplified",
+            "podcast_description": "Making complex science accessible and exciting. From quantum physics to climate change, we break it down.",
+            "niche": ["Science", "Education"],
+            "topics": ["Physics", "Biology", "Climate", "Innovation"],
+            "audience_size": "50K-100K",
+            "preferred_guest_type": ["Expert", "Researcher"],
+            "language": "English",
+            "country": "Canada",
+            "recording_format": "remote",
+            "availability": "Weekday mornings"
+        },
+        {
+            "name": "Carlos Rivera",
+            "email": "carlos.rivera@demo.com",
+            "picture": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop",
+            "podcast_name": "Startup Stories",
+            "podcast_description": "Behind-the-scenes stories from founders who've built successful companies from the ground up.",
+            "niche": ["Business", "Technology"],
+            "topics": ["Entrepreneurship", "Startups", "Leadership", "Innovation"],
+            "audience_size": "100K+",
+            "preferred_guest_type": ["Founder", "Expert"],
+            "language": "English",
+            "country": "Mexico",
+            "recording_format": "remote",
+            "availability": "Flexible schedule"
         }
     ]
     
