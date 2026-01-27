@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PodcastMatch - Data Mapping Diagram</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #09090B;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #71717A;
+            margin-bottom: 30px;
+        }
+        .mermaid {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #09090B;
+            margin-bottom: 15px;
+            border-bottom: 3px solid #EA580C;
+            padding-bottom: 10px;
+        }
+        .legend {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .legend-item {
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #E4E4E7;
+        }
+        .legend-item h3 {
+            margin: 0 0 10px 0;
+            color: #09090B;
+            font-size: 16px;
+        }
+        .legend-item ul {
+            margin: 0;
+            padding-left: 20px;
+            font-size: 14px;
+            color: #52525B;
+        }
+        .api-endpoint {
+            background: #F4F4F5;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin: 5px 0;
+            font-family: monospace;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎙️ PodcastMatch - Data Mapping & Architecture</h1>
+        <p class="subtitle">Complete system architecture showing database schema, relationships, API endpoints, and data flow</p>
+
+        <div class="section">
+            <div class="section-title">📊 Database Schema & Relationships</div>
+            <div class="mermaid">
+erDiagram
+    USERS ||--o| PROFILES : has
+    USERS ||--o{ USER_SESSIONS : has
+    USERS ||--o{ SWIPES : makes
+    USERS ||--o{ MATCHES : participates
+    USERS ||--o{ CHAT_MESSAGES : sends
+    USERS ||--o{ PAYMENT_TRANSACTIONS : has
+    MATCHES ||--o{ CHAT_MESSAGES : contains
+    
+    USERS {
+        string user_id PK
+        string email UK
+        string name
+        string picture
+        string role
+        boolean profile_completed
+        string subscription_tier
+        int swipes_today
+        datetime swipes_reset_at
+        datetime created_at
+    }
+    
+    PROFILES {
+        string user_id PK_FK
+        array niche
+        string language
+        string country
+        string availability
+        string podcast_name
+        string podcast_description
+        array topics
+        string audience_size
+        array preferred_guest_type
+        string recording_format
+        object podcast_links
+        string bio
+        array expertise
+        array previous_appearances
+        object social_links
+        boolean remote_recording
+        datetime created_at
+        datetime updated_at
+    }
+    
+    USER_SESSIONS {
+        string user_id FK
+        string session_token PK
+        datetime expires_at
+        datetime created_at
+    }
+    
+    SWIPES {
+        string swipe_id PK
+        string swiper_id FK
+        string swiped_id FK
+        string direction
+        datetime created_at
+    }
+    
+    MATCHES {
+        string match_id PK
+        string user1_id FK
+        string user2_id FK
+        datetime created_at
+        datetime last_message_at
+    }
+    
+    CHAT_MESSAGES {
+        string message_id PK
+        string match_id FK
+        string sender_id FK
+        string content
+        datetime created_at
+    }
+    
+    PAYMENT_TRANSACTIONS {
+        string payment_id PK
+        string user_id FK
+        string session_id
+        float amount
+        string currency
+        string status
+        string payment_status
+        object metadata
+        datetime created_at
+        datetime updated_at
+    }
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">🔄 Data Flow Architecture</div>
+            <div class="mermaid">
+graph TB
+    subgraph Frontend["🖥️ React Frontend"]
+        Landing[Landing Page]
+        Auth[Auth Flow]
+        Role[Role Selection]
+        Profile[Profile Setup]
+        Discovery[Discovery/Swipe]
+        Matches[Matches List]
+        Chat[Chat Interface]
+        Settings[Settings]
+        Admin[Admin Dashboard]
+    end
+    
+    subgraph Backend["⚙️ FastAPI Backend"]
+        AuthAPI[Auth APIs]
+        ProfileAPI[Profile APIs]
+        DiscoveryAPI[Discovery API]
+        SwipeAPI[Swipe API]
+        MatchAPI[Match APIs]
+        ChatAPI[Chat APIs]
+        AIAPI[AI APIs]
+        PaymentAPI[Payment APIs]
+        AdminAPI[Admin APIs]
+    end
+    
+    subgraph Database["🗄️ MongoDB"]
+        Users[(Users)]
+        Profiles[(Profiles)]
+        Sessions[(Sessions)]
+        Swipes[(Swipes)]
+        MatchesDB[(Matches)]
+        Messages[(Messages)]
+        Payments[(Payments)]
+    end
+    
+    subgraph External["🌐 External Services"]
+        EmergentAuth[Emergent Auth]
+        OpenAI[OpenAI GPT-5.2]
+        Stripe[Stripe Payments]
+    end
+    
+    subgraph ML["🧠 ML Layer"]
+        PyTorch[PyTorch Model]
+        Training[Training Pipeline]
+        Recommender[Recommender System]
+    end
+    
+    Landing --> Auth
+    Auth --> EmergentAuth
+    EmergentAuth --> AuthAPI
+    AuthAPI --> Sessions
+    
+    Role --> ProfileAPI
+    Profile --> ProfileAPI
+    ProfileAPI --> Users
+    ProfileAPI --> Profiles
+    
+    Discovery --> DiscoveryAPI
+    DiscoveryAPI --> Recommender
+    Recommender --> PyTorch
+    DiscoveryAPI --> Users
+    DiscoveryAPI --> Profiles
+    DiscoveryAPI --> Swipes
+    
+    Discovery --> SwipeAPI
+    SwipeAPI --> Swipes
+    SwipeAPI --> MatchesDB
+    
+    Matches --> MatchAPI
+    MatchAPI --> MatchesDB
+    
+    Chat --> ChatAPI
+    Chat --> AIAPI
+    ChatAPI --> Messages
+    AIAPI --> OpenAI
+    
+    Settings --> PaymentAPI
+    PaymentAPI --> Stripe
+    PaymentAPI --> Payments
+    PaymentAPI --> Users
+    
+    Admin --> AdminAPI
+    Admin --> Training
+    Training --> Swipes
+    Training --> PyTorch
+    
+    style Frontend fill:#FEF3C7
+    style Backend fill:#DBEAFE
+    style Database fill:#D1FAE5
+    style External fill:#FCE7F3
+    style ML fill:#E0E7FF
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">🔌 API Endpoints Mapping</div>
+            <div class="legend">
+                <div class="legend-item">
+                    <h3>🔐 Authentication APIs</h3>
+                    <div class="api-endpoint">POST /api/auth/session</div>
+                    <div class="api-endpoint">GET /api/auth/me</div>
+                    <div class="api-endpoint">POST /api/auth/logout</div>
+                </div>
+                
+                <div class="legend-item">
+                    <h3>👤 Profile APIs</h3>
+                    <div class="api-endpoint">POST /api/role</div>
+                    <div class="api-endpoint">POST /api/profile</div>
+                    <div class="api-endpoint">GET /api/profile</div>
+                </div>
+                
+                <div class="legend-item">
+                    <h3>🔍 Discovery & Matching APIs</h3>
+                    <div class="api-endpoint">GET /api/discover</div>
+                    <div class="api-endpoint">POST /api/swipe</div>
+                    <div class="api-endpoint">GET /api/matches</div>
+                </div>
+                
+                <div class="legend-item">
+                    <h3>💬 Chat APIs</h3>
+                    <div class="api-endpoint">GET /api/chat/{match_id}/messages</div>
+                    <div class="api-endpoint">POST /api/chat/{match_id}/messages</div>
+                </div>
+                
+                <div class="legend-item">
+                    <h3>🤖 AI APIs</h3>
+                    <div class="api-endpoint">POST /api/ai/generate-pitch</div>
+                </div>
+                
+                <div class="legend-item">
+                    <h3>💳 Payment APIs</h3>
+                    <div class="api-endpoint">GET /api/subscription/status</div>
+                    <div class="api-endpoint">POST /api/subscription/checkout</div>
+                    <div class="api-endpoint">GET /api/subscription/checkout-status/{id}</div>
+                    <div class="api-endpoint">POST /api/webhook/stripe</div>
+                </div>
+                
+                <div class="legend-item">
+                    <h3>⚙️ Admin APIs</h3>
+                    <div class="api-endpoint">GET /api/admin/users</div>
+                    <div class="api-endpoint">GET /api/admin/stats</div>
+                    <div class="api-endpoint">POST /api/admin/train-model</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">🧠 ML Model Data Flow</div>
+            <div class="mermaid">
+graph LR
+    subgraph Input["📥 Input Data"]
+        SwipeData[Swipe Data<br/>swiper_id, swiped_id, direction]
+    end
+    
+    subgraph Processing["⚙️ Processing"]
+        Mapping[ID Mapping<br/>User/Item → Index]
+        Training[Training Data<br/>user_idx, item_idx, label]
+    end
+    
+    subgraph Model["🧠 Neural CF Model"]
+        UserEmb[User Embeddings<br/>32-dim]
+        ItemEmb[Item Embeddings<br/>32-dim]
+        MLP[Multi-Layer Perceptron<br/>64→32→16]
+        Output[Prediction Score<br/>0.0 - 1.0]
+    end
+    
+    subgraph Application["🎯 Application"]
+        Ranking[Candidate Ranking]
+        Discovery[Discovery Feed]
+    end
+    
+    SwipeData --> Mapping
+    Mapping --> Training
+    Training --> UserEmb
+    Training --> ItemEmb
+    UserEmb --> MLP
+    ItemEmb --> MLP
+    MLP --> Output
+    Output --> Ranking
+    Ranking --> Discovery
+    
+    style Input fill:#FEF3C7
+    style Processing fill:#DBEAFE
+    style Model fill:#E0E7FF
+    style Application fill:#D1FAE5
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">📋 Data Type Legend</div>
+            <div class="legend">
+                <div class="legend-item">
+                    <h3>User Roles</h3>
+                    <ul>
+                        <li><strong>host</strong>: Podcast hosts looking for guests</li>
+                        <li><strong>guest</strong>: Experts wanting to be podcast guests</li>
+                    </ul>
+                </div>
+                
+                <div class="legend-item">
+                    <h3>Subscription Tiers</h3>
+                    <ul>
+                        <li><strong>free</strong>: 20 swipes/day, limited chats</li>
+                        <li><strong>pro</strong>: Unlimited swipes & chats</li>
+                    </ul>
+                </div>
+                
+                <div class="legend-item">
+                    <h3>Swipe Directions</h3>
+                    <ul>
+                        <li><strong>right</strong>: Interested (like)</li>
+                        <li><strong>left</strong>: Not interested (pass)</li>
+                    </ul>
+                </div>
+                
+                <div class="legend-item">
+                    <h3>Payment Status</h3>
+                    <ul>
+                        <li><strong>pending</strong>: Checkout initiated</li>
+                        <li><strong>paid</strong>: Payment completed</li>
+                        <li><strong>failed</strong>: Payment failed</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">🔑 Key Relationships</div>
+            <div class="legend">
+                <div class="legend-item">
+                    <h3>User → Profile (1:1)</h3>
+                    <ul>
+                        <li>Each user has exactly one profile</li>
+                        <li>Profile fields differ based on role (host vs guest)</li>
+                        <li>Linked by user_id</li>
+                    </ul>
+                </div>
+                
+                <div class="legend-item">
+                    <h3>User → Swipes (1:N)</h3>
+                    <ul>
+                        <li>Users can make multiple swipes</li>
+                        <li>Tracks swiper_id and swiped_id</li>
+                        <li>Direction: left or right</li>
+                    </ul>
+                </div>
+                
+                <div class="legend-item">
+                    <h3>Match Creation (M:N)</h3>
+                    <ul>
+                        <li>Requires mutual right swipes</li>
+                        <li>Creates match record with both user IDs</li>
+                        <li>Enables chat functionality</li>
+                    </ul>
+                </div>
+                
+                <div class="legend-item">
+                    <h3>Match → Messages (1:N)</h3>
+                    <ul>
+                        <li>Each match can have multiple messages</li>
+                        <li>Messages linked to match_id</li>
+                        <li>Sender_id tracks who sent message</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+    </script>
+</body>
+</html>
