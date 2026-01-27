@@ -144,6 +144,7 @@ async def populate_demo_data():
         {
             "name": "Alex Thompson",
             "email": "alex.thompson@demo.com",
+            "picture": "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=400&h=400&fit=crop",
             "bio": "Former VP of Engineering at a unicorn startup. Now advising early-stage tech companies on scaling engineering teams and building product culture.",
             "expertise": ["Technology", "Business", "Leadership"],
             "niche": ["Technology", "Business"],
@@ -156,6 +157,7 @@ async def populate_demo_data():
         {
             "name": "Dr. Maya Patel",
             "email": "maya.patel@demo.com",
+            "picture": "https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=400&h=400&fit=crop",
             "bio": "Clinical psychologist and bestselling author specializing in workplace mental health. Featured in NYT, Forbes, and Psychology Today.",
             "expertise": ["Health", "Personal Development", "Mental Wellness"],
             "niche": ["Health", "Personal Development"],
@@ -168,6 +170,7 @@ async def populate_demo_data():
         {
             "name": "Jordan Lee",
             "email": "jordan.lee@demo.com",
+            "picture": "https://images.unsplash.com/photo-1639149888905-fb39731f2e6c?w=400&h=400&fit=crop",
             "bio": "Growth marketing expert who scaled 3 startups from 0 to 8 figures. Speaker, consultant, and recovering perfectionist.",
             "expertise": ["Marketing", "Business", "Growth Strategy"],
             "niche": ["Marketing", "Business"],
@@ -180,6 +183,7 @@ async def populate_demo_data():
         {
             "name": "Sophia Martinez",
             "email": "sophia.martinez@demo.com",
+            "picture": "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=400&h=400&fit=crop",
             "bio": "Certified nutritionist and fitness coach with 15+ years experience. Passionate about making healthy living sustainable and joyful.",
             "expertise": ["Health", "Fitness", "Nutrition"],
             "niche": ["Health", "Fitness"],
@@ -192,6 +196,7 @@ async def populate_demo_data():
         {
             "name": "James Wilson",
             "email": "james.wilson@demo.com",
+            "picture": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=400&fit=crop",
             "bio": "CFP and wealth management advisor helping millennials build long-term wealth. Host of a popular finance YouTube channel with 200K+ subscribers.",
             "expertise": ["Finance", "Investing", "Personal Finance"],
             "niche": ["Finance", "Business"],
@@ -204,6 +209,7 @@ async def populate_demo_data():
         {
             "name": "Olivia Brown",
             "email": "olivia.brown@demo.com",
+            "picture": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=400&fit=crop",
             "bio": "EdTech founder who built and sold an online learning platform to a Fortune 500 company. Now angel investing in education startups.",
             "expertise": ["Education", "Technology", "Entrepreneurship"],
             "niche": ["Education", "Technology"],
@@ -216,6 +222,7 @@ async def populate_demo_data():
         {
             "name": "Ryan Cooper",
             "email": "ryan.cooper@demo.com",
+            "picture": "https://images.unsplash.com/photo-1463453091185-61582044d556?w=400&h=400&fit=crop",
             "bio": "AI researcher and tech ethicist exploring the societal impact of artificial intelligence. TEDx speaker and consultant to Fortune 500 companies.",
             "expertise": ["Technology", "Science", "Ethics"],
             "niche": ["Technology", "Science"],
@@ -224,6 +231,71 @@ async def populate_demo_data():
             "remote_recording": True,
             "availability": "Afternoons PST",
             "previous_appearances": ["a16z Podcast", "The AI Alignment Podcast"]
+        },
+        {
+            "name": "Kenji Tanaka",
+            "email": "kenji.tanaka@demo.com",
+            "picture": "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop",
+            "bio": "Product designer who's led design teams at top tech companies. Teaching the next generation of designers through workshops and mentorship.",
+            "expertise": ["Technology", "Design", "Product"],
+            "niche": ["Technology", "Business"],
+            "language": "English",
+            "country": "Japan",
+            "remote_recording": True,
+            "availability": "Evenings JST",
+            "previous_appearances": ["Design Better Podcast", "High Resolution"]
+        },
+        {
+            "name": "Amanda Foster",
+            "email": "amanda.foster@demo.com",
+            "picture": "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=400&h=400&fit=crop",
+            "bio": "Climate scientist and environmental advocate. Making climate science accessible through storytelling and compelling data visualization.",
+            "expertise": ["Science", "Environment", "Education"],
+            "niche": ["Science", "Education"],
+            "language": "English",
+            "country": "United Kingdom",
+            "remote_recording": True,
+            "availability": "Weekday mornings GMT",
+            "previous_appearances": ["Science Vs", "The Climate Question"]
+        },
+        {
+            "name": "Marcus Brown",
+            "email": "marcus.brown@demo.com",
+            "picture": "https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=400&h=400&fit=crop",
+            "bio": "Serial entrepreneur with 3 successful exits. Sharing lessons learned from building and selling companies across different industries.",
+            "expertise": ["Business", "Entrepreneurship", "Leadership"],
+            "niche": ["Business", "Technology"],
+            "language": "English",
+            "country": "United States",
+            "remote_recording": True,
+            "availability": "Flexible schedule",
+            "previous_appearances": ["How I Built This", "Masters of Scale"]
+        },
+        {
+            "name": "Nina Rodriguez",
+            "email": "nina.rodriguez@demo.com",
+            "picture": "https://images.unsplash.com/photo-1598550874175-4d0ef436c909?w=400&h=400&fit=crop",
+            "bio": "Social media strategist who's grown accounts to millions of followers. Teaching authentic personal branding and content creation.",
+            "expertise": ["Marketing", "Social Media", "Content"],
+            "niche": ["Marketing", "Business"],
+            "language": "English",
+            "country": "United States",
+            "remote_recording": True,
+            "availability": "Afternoons EST",
+            "previous_appearances": ["Social Media Marketing Podcast", "The Goal Digger Podcast"]
+        },
+        {
+            "name": "Dr. Samuel Lee",
+            "email": "samuel.lee@demo.com",
+            "picture": "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400&h=400&fit=crop",
+            "bio": "Neuroscientist researching the science of habit formation and behavioral change. Making neuroscience practical for everyday life.",
+            "expertise": ["Science", "Health", "Personal Development"],
+            "niche": ["Science", "Health"],
+            "language": "English",
+            "country": "Canada",
+            "remote_recording": True,
+            "availability": "Weekday evenings",
+            "previous_appearances": ["Huberman Lab", "Found My Fitness"]
         }
     ]
     
