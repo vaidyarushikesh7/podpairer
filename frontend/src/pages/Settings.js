@@ -209,12 +209,16 @@ function Settings() {
 
         <div className="space-y-4">
           <Button
-            onClick={() => navigate('/admin')}
+            onClick={() => navigate('/dev/data-mapping')}
             variant="outline"
-            className="w-full justify-start rounded-xl py-6 text-left border-2 hover:border-zinc-950"
-            data-testid="admin-panel-btn"
+            className="w-full justify-start rounded-xl py-6 text-left border-2 hover:border-violet-600 group"
+            data-testid="data-mapping-btn"
           >
-            Admin Panel
+            <Code className="h-5 w-5 mr-2 text-violet-600" />
+            <div>
+              <div className="font-semibold">Developer Documentation</div>
+              <div className="text-xs text-zinc-500 group-hover:text-zinc-600">View system architecture & data mapping</div>
+            </div>
           </Button>
 
           <Button
